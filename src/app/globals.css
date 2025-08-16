@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* CORES ORIGINAIS - LANDING PAGE E LOGIN */
+    --bg: #0b0d17;
+    --text: #ffffff;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --brand-400: #c084fc;
+    --brand-500: #a855f7;
+    --brand-600: #9333ea;
+  }
+
+
+
+  /* Shadcn compatibility - CORES ORIGINAIS */
+  :root {
+    --background: 220 13% 7%;
+    --foreground: 210 20% 98%;
+    --card: 220 13% 9%;
+    --card-foreground: 210 20% 98%;
+    --popover: 220 13% 9%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 258 90% 66%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 220 13% 15%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 258 90% 66%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+  }
+}

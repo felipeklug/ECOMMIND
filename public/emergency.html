@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOMMIND - Teste de Emergência</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid #22c55e;
+        }
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+        }
+        .warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 2px solid #f59e0b;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .test-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .test-link {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .test-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 ECOMMIND - Teste de Emergência</h1>
+        
+        <div class="card success">
+            <h2>✅ HTML Funcionando!</h2>
+            <p>Se você está vendo esta página, o servidor está rodando.</p>
+            <p><strong>URL:</strong> http://localhost:3000/emergency.html</p>
+        </div>
+
+        <div class="card warning">
+            <h2>⚠️ Diagnóstico do Problema</h2>
+            <p>Se esta página funciona mas as outras não, o problema é:</p>
+            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                <li>❌ Next.js não está compilando</li>
+                <li>❌ Erro de JavaScript/React</li>
+                <li>❌ Problema de dependências</li>
+                <li>❌ Erro de configuração</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🔧 Testes para Fazer</h2>
+            <div class="test-links">
+                <a href="/" class="test-link">
+                    <strong>Página Principal</strong><br>
+                    <small>Next.js Route</small>
+                </a>
+                <a href="/simple" class="test-link">
+                    <strong>Página Simples</strong><br>
+                    <small>Teste Básico</small>
+                </a>
+                <a href="/test" class="test-link">
+                    <strong>Página de Teste</strong><br>
+                    <small>Diagnóstico</small>
+                </a>
+                <a href="/api/health" class="test-link">
+                    <strong>API Health</strong><br>
+                    <small>Backend Test</small>
+                </a>
+            </div>
+        </div>
+
+        <div class="card error">
+            <h2>🚨 Se Nada Funcionar</h2>
+            <p>Execute estes comandos no terminal:</p>
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; text-align: left;">
+                <code>
+                # 1. Parar servidor (Ctrl+C)<br>
+                # 2. Limpar tudo<br>
+                rm -rf .next node_modules package-lock.json<br>
+                npm install<br>
+                npm run build<br>
+                npm run dev
+                </code>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📋 Checklist de Diagnóstico</h2>
+            <button onclick="checkConsole()">Verificar Console</button>
+            <button onclick="checkNetwork()">Verificar Network</button>
+            <button onclick="checkLocalStorage()">Verificar Storage</button>
+            
+            <div id="results" style="margin-top: 20px; text-align: left;"></div>
+        </div>
+    </div>
+
+    <script>
+        function checkConsole() {
+            const results = document.getElementById('results');
+            results.innerHTML = `
+                <h3>🔍 Verificação do Console:</h3>
+                <p>1. Pressione F12</p>
+                <p>2. Vá na aba "Console"</p>
+                <p>3. Procure por erros em vermelho</p>
+                <p>4. Copie e cole os erros para o desenvolvedor</p>
+            `;
+        }
+
+        function checkNetwork() {
+            const results = document.getElementById('results');
+            results.innerHTML = `
+                <h3>🌐 Verificação de Network:</h3>
+                <p>1. Pressione F12</p>
+                <p>2. Vá na aba "Network"</p>
+                <p>3. Recarregue a página (F5)</p>
+                <p>4. Procure por requisições em vermelho (404, 500)</p>
+            `;
+        }
+
+        function checkLocalStorage() {
+            const results = document.getElementById('results');
+            try {
+                localStorage.setItem('test', 'ok');
+                const test = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                
+                results.innerHTML = `
+                    <h3>💾 Storage: ✅ Funcionando</h3>
+                    <p>LocalStorage está funcionando normalmente.</p>
+                `;
+            } catch (e) {
+                results.innerHTML = `
+                    <h3>💾 Storage: ❌ Erro</h3>
+                    <p>Erro: ${e.message}</p>
+                `;
+            }
+        }
+
+        // Auto-check on load
+        window.onload = function() {
+            console.log('🚨 EMERGENCY PAGE LOADED');
+            console.log('✅ HTML/CSS/JS working');
+            console.log('🔍 Check other pages now');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo ECOMMIND conforme imagem anexa -->
+  <g transform="translate(50, 100)">
+    <!-- Ícone do cérebro/mente -->
+    <path d="M50 80C50 60 60 50 80 50C90 40 100 40 110 40C120 40 130 40 140 50C160 50 170 60 170 80C170 90 170 100 170 110C170 130 160 140 140 140C130 150 120 150 110 150C100 150 90 150 80 140C60 140 50 130 50 110C50 100 50 90 50 80Z" 
+          fill="none" 
+          stroke="#8B5CF6" 
+          stroke-width="4" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"/>
+    
+    <!-- Divisão central do cérebro -->
+    <path d="M110 50C110 70 110 90 110 130" 
+          stroke="#8B5CF6" 
+          stroke-width="3" 
+          stroke-linecap="round"/>
+    
+    <!-- Texto ECOMMIND -->
+    <text x="200" y="80" 
+          font-family="Arial, sans-serif" 
+          font-size="36" 
+          font-weight="bold" 
+          fill="#1F2937">ECOMMIND</text>
+    
+    <!-- Subtítulo -->
+    <text x="200" y="105" 
+          font-family="Arial, sans-serif" 
+          font-size="14" 
+          fill="#6B7280">Gestão Inteligente</text>
+  </g>
+</svg>

@@ -1,0 +1,90 @@
+---
+description: "Briefing de marketing estratégico para ECOMMIND - Perfil do cliente ideal, análise psicográfica e estratégias de posicionamento"
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Marketing Briefing - ECOMMIND - Version: 1.0.0
+
+## Purpose & Scope
+
+Este briefing define o perfil do cliente ideal, análise psicográfica e estratégias de marketing para ECOMMIND.
+
+## Implementation Guidelines
+
+### Briefing Completo
+
+# Perfil do Cliente
+
+## Cliente
+
+- [Mercado-Alvo]= Empreendedores e gestores de e-commerce multicanal com faturamento entre R$ 100k e R$ 5M mensais, que vendem em 3+ canais (Mercado Livre, Shopee, Amazon, loja própria) e enfrentam dificuldades para centralizar dados, controlar margens e tomar decisões rápidas baseadas em informações confiáveis.
+
+- [Avatar]= Empresário de e-commerce, 28-45 anos, ensino superior completo, 3-8 anos de experiência no varejo online, gerencia equipe de 5-20 pessoas, faturamento mensal entre R$ 200k-2M, vende em múltiplos marketplaces, passa 60% do tempo "apagando incêndios" ao invés de planejando estrategicamente.
+
+- [Meta Principal]= Ter controle total e visibilidade em tempo real de toda operação de e-commerce para tomar decisões estratégicas baseadas em dados confiáveis e aumentar a margem líquida em pelo menos 15%.
+
+- [Metas Secundárias]= Reduzir tempo gasto com relatórios manuais em 80%, eliminar rupturas de estoque dos produtos top 20, automatizar alertas críticos para a equipe, integrar gestão financeira com operacional, planejar campanhas com antecedência baseado em dados históricos.
+
+- [Problema Principal]= Não consegue ter uma visão unificada e em tempo real de vendas, margens, estoque e fluxo de caixa across todos os canais, resultando em decisões baseadas em "achismo" e perda de oportunidades de lucro.
+
+- [Problemas Secundários]= Perde vendas por ruptura de estoque, não sabe a margem real de cada produto vendido, gasta horas fazendo relatórios manuais no Excel, não consegue prever problemas de fluxo de caixa, equipe não é alertada sobre situações críticas em tempo real.
+
+- [Medo Principal]= Perder o controle da operação conforme cresce e acabar falindo por não conseguir identificar onde está perdendo dinheiro ou por tomar decisões erradas baseadas em informações desatualizadas ou incompletas.
+
+- [Emoções Viscerais Principais]= Frustração por trabalhar muito e não saber se está lucrando de verdade, ansiedade constante por não ter controle dos números, estresse por descobrir problemas críticos tarde demais, sensação de estar "voando cego" na gestão do negócio.
+
+- [Desejos Secretos Mais Profundos]= Ser reconhecido como um empresário de sucesso que construiu um e-commerce sólido e lucrativo, ter tempo livre para focar em estratégia ao invés de operação, dormir tranquilo sabendo que tem controle total do negócio, ser referência no seu nicho de mercado.
+
+## Dimensionalizado
+
+- [Promessas]= Aumentar margem líquida em 15-30% nos primeiros 6 meses, reduzir rupturas de estoque em 90%, economizar 20+ horas semanais em relatórios manuais, ter visibilidade completa de fluxo de caixa projetado para 90 dias.
+
+- [Benefícios Práticos]= BI em tempo real com margem venda a venda, alertas automáticos no WhatsApp para situações críticas, gestão de tarefas integrada com insights, previsão de estoque com sugestão de reposição, fluxo de caixa projetado integrado com recebíveis.
+
+- [Benefícios Emocionais]= Tranquilidade de ter controle total da operação, confiança para tomar decisões estratégicas baseadas em dados, orgulho de ter um negócio profissional e organizado, liberdade para focar no crescimento ao invés de "apagar incêndios".
+
+- [Objeções Práticas]= "Já uso o Bling e outras ferramentas", "Vai ser mais uma ferramenta para gerenciar", "Minha equipe não vai conseguir usar", "O preço pode ser alto para o meu faturamento atual", "Integração pode ser complicada".
+
+- [Objeções Emocionais]= Medo de mudança e perder tempo com implementação, receio de que seja "mais do mesmo", desconfiança se realmente vai resolver os problemas, ansiedade sobre curva de aprendizado da equipe.
+
+- [Crenças Limitantes Equivocadas]= "Planilhas do Excel resolvem meus problemas", "BI é só para empresas grandes", "WhatsApp não é ferramenta profissional", "Integração entre sistemas é sempre problemática", "Ferramentas completas são sempre caras e complexas".
+
+- [Crenças Equivocadas Secundárias]= "Meu contador já faz o controle financeiro", "Relatórios semanais são suficientes", "Alertas automáticos geram muito spam", "Gestão de tarefas não precisa estar integrada com BI".
+
+- [Identidade do Avatar Transformado]= Empresário de e-commerce data-driven que toma decisões estratégicas baseadas em insights em tempo real, tem operação profissional e escalável, é referência em gestão inteligente no seu segmento, tem tempo para focar em crescimento e inovação.
+
+- [Soluções Comuns Indesejadas]= Planilhas Excel complexas e manuais, múltiplas ferramentas desconectadas (Google Analytics + Bling + WhatsApp Business + Trello), relatórios semanais estáticos, controle manual de estoque, dashboards que não geram ação.
+
+## Marketing
+
+- [Solução Única]= A única plataforma que transforma seu WhatsApp no centro de comando do seu e-commerce, unindo BI em tempo real, gestão de equipe e alertas inteligentes numa experiência conversacional que você já usa todos os dias.
+
+- [Mecanismo Do Problema]= E-commerces multicanal geram dados fragmentados em dezenas de sistemas diferentes, criando "pontos cegos" que impedem visão unificada, resultando em decisões tardias ou baseadas em informações incompletas que corroem a margem e limitam o crescimento.
+
+- [Analogias para o Problema]= É como dirigir um carro com o para-brisa embaçado - você sabe que está se movendo, mas não vê os obstáculos até ser tarde demais. Ou como ser um piloto de avião voando sem instrumentos - você pode até chegar ao destino, mas o risco de acidente é altíssimo.
+
+- [Mecanismo Da Solução]= ECOMMIND funciona como um "sistema nervoso central" que conecta todos os pontos de dados do seu e-commerce, processa informações em tempo real e entrega insights acionáveis diretamente no WhatsApp, transformando dados em decisões instantâneas.
+
+- [Analogias para a Solução]= É como ter um CFO, analista de BI e assistente pessoal trabalhando 24/7 no seu WhatsApp, te alertando sobre tudo que importa e sugerindo ações. Ou como ter "visão de raio-X" do seu negócio - você vê através de todos os canais e sistemas numa única tela.
+
+- [Provas]= Clientes aumentaram margem líquida em 23% em média nos primeiros 4 meses, redução de 87% nas rupturas de estoque dos produtos top 20, economia de 25 horas semanais em relatórios manuais, 94% dos alertas críticos identificados em menos de 5 minutos.
+
+- [Depoimentos]= "Finalmente sei quanto estou lucrando de verdade em cada venda" - João, Loja de Eletrônicos. "O WhatsApp virou meu painel de controle, recebo tudo que preciso saber na palma da mão" - Maria, Moda Feminina. "Nunca mais tive ruptura nos meus produtos principais" - Carlos, Suplementos.
+
+- [Futuro Presumido de Sucesso]= Em 6 meses você terá um e-commerce que roda sozinho, com alertas automáticos prevenindo problemas antes que aconteçam, equipe alinhada através de tarefas inteligentes, margens otimizadas e fluxo de caixa previsível, permitindo que você foque 100% em crescimento estratégico.
+
+- [Palavras Poderosas]= Controle, Tempo Real, Automático, Inteligente, Unificado, Conversacional, Acionável, Previsível, Estratégico, Profissional.
+
+- [Frases Poderosas]= "Seu WhatsApp como centro de comando do e-commerce", "BI que fala a sua língua", "Dados que viram decisão em segundos", "O único sistema que você precisa para controlar tudo", "Gestão inteligente na palma da mão".
+
+### Aplicação Prática
+
+- Use este briefing como base para criação de copy
+- Consulte as objeções identificadas ao criar argumentos de venda
+- Aplique as palavras e frases poderosas em todos os materiais
+- Mantenha consistência com o avatar definido
+
+## Last Updated
+
+2025-01-14
