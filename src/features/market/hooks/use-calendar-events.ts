@@ -38,6 +38,9 @@ interface UseCalendarEventsParams {
   channel?: string;
   category?: string;
   importance?: string;
+  niche?: string;
+  global?: boolean;
+  include_silenced?: boolean;
 }
 
 const fetcher = async (url: string): Promise<CalendarEventsData> => {
@@ -57,6 +60,9 @@ export function useCalendarEvents(params: UseCalendarEventsParams = {}) {
   if (params.channel && params.channel !== 'all') searchParams.set('channel', params.channel);
   if (params.category && params.category !== 'all') searchParams.set('category', params.category);
   if (params.importance && params.importance !== 'all') searchParams.set('importance', params.importance);
+  if (params.niche && params.niche !== 'all') searchParams.set('niche', params.niche);
+  if (params.global !== undefined) searchParams.set('global', params.global.toString());
+  if (params.include_silenced !== undefined) searchParams.set('include_silenced', params.include_silenced.toString());
 
   const queryString = searchParams.toString();
   const url = `/api/planning/calendar/list${queryString ? `?${queryString}` : ''}`;

@@ -25,6 +25,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Target,
+  Brain,
+  Sparkles,
+  Settings,
 } from 'lucide-react';
 import { CalendarView } from './calendar-view';
 import { EventDrawer } from './event-drawer';
@@ -43,6 +46,10 @@ export function CalendarContent() {
     channel: 'all',
     category: 'all',
     importance: 'all',
+    niche: 'all',
+    global: true,
+    show_my_niche: true,
+    show_my_events: true,
   });
 
   // Get calendar events for current month
@@ -73,6 +80,50 @@ export function CalendarContent() {
   const handleCreateMission = async (event: any) => {
     // TODO: Integrate with missions API
     console.log('Creating mission for event:', event);
+  };
+
+  const handleResolveNiche = async () => {
+    try {
+      const response = await fetch('/api/planning/calendar/resolve-niche', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ force_refresh: true }),
+      });
+
+      if (!response.ok) throw new Error('Failed to resolve niche');
+
+      const result = await response.json();
+      console.log('Niche resolved:', result);
+      // TODO: Show success toast and update UI
+    } catch (error) {
+      console.error('Failed to resolve niche:', error);
+      // TODO: Show error toast
+    }
+  };
+
+  const handleCurateCalendar = async () => {
+    try {
+      const response = await fetch('/api/planning/calendar/curate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          force_refresh: false,
+          include_global: true,
+          max_events_per_niche: 20,
+          importance_threshold: 'low',
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to curate calendar');
+
+      const result = await response.json();
+      console.log('Calendar curated:', result);
+      mutate(); // Refresh events
+      // TODO: Show success toast with summary
+    } catch (error) {
+      console.error('Failed to curate calendar:', error);
+      // TODO: Show error toast
+    }
   };
 
   const getImportanceStats = () => {
@@ -114,7 +165,7 @@ export function CalendarContent() {
           {/* Filters */}
           <div className="flex items-center space-x-2">
             <Filter className="h-4 w-4 text-muted-foreground" />
-            
+
             <Select value={filters.channel} onValueChange={(value) => setFilters(prev => ({ ...prev, channel: value }))}>
               <SelectTrigger className="w-32">
                 <SelectValue />
@@ -126,6 +177,26 @@ export function CalendarContent() {
                 <SelectItem value="shopee">Shopee</SelectItem>
                 <SelectItem value="amazon">Amazon</SelectItem>
                 <SelectItem value="site">Site</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={filters.niche} onValueChange={(value) => setFilters(prev => ({ ...prev, niche: value }))}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos Nichos</SelectItem>
+                <SelectItem value="global">Global</SelectItem>
+                <SelectItem value="pet">Pet</SelectItem>
+                <SelectItem value="moda">Moda</SelectItem>
+                <SelectItem value="beleza">Beleza</SelectItem>
+                <SelectItem value="saude">Saúde</SelectItem>
+                <SelectItem value="auto">Auto</SelectItem>
+                <SelectItem value="casa">Casa</SelectItem>
+                <SelectItem value="eletronicos">Eletrônicos</SelectItem>
+                <SelectItem value="infantil">Infantil</SelectItem>
+                <SelectItem value="esportes">Esportes</SelectItem>
+                <SelectItem value="games">Games</SelectItem>
               </SelectContent>
             </Select>
 
@@ -149,6 +220,17 @@ export function CalendarContent() {
             <Upload className="h-4 w-4 mr-2" />
             Importar CSV
           </Button>
+
+          <Button variant="outline" onClick={handleResolveNiche}>
+            <Brain className="h-4 w-4 mr-2" />
+            Resolver Nicho
+          </Button>
+
+          <Button variant="outline" onClick={handleCurateCalendar}>
+            <Sparkles className="h-4 w-4 mr-2" />
+            Curar IA
+          </Button>
+
           <Button onClick={() => setShowCreateDialog(true)}>
             <Plus className="h-4 w-4 mr-2" />
             Novo Evento

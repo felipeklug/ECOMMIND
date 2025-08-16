@@ -24,6 +24,10 @@ import {
   Clock,
   Tag,
   Building,
+  Sparkles,
+  CheckSquare,
+  Copy,
+  VolumeX,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -225,7 +229,19 @@ export function EventDrawer({
                   <Edit className="h-4 w-4 mr-2" />
                   Editar
                 </Button>
-                
+
+                <Button variant="outline" size="sm">
+                  <VolumeX className="h-4 w-4 mr-2" />
+                  Silenciar
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="outline" size="sm">
+                  <Copy className="h-4 w-4 mr-2" />
+                  Duplicar
+                </Button>
+
                 <Button variant="outline" size="sm">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Compartilhar
@@ -238,6 +254,76 @@ export function EventDrawer({
                   Excluir Evento
                 </Button>
               )}
+            </div>
+          </div>
+
+          {/* Campaign Template */}
+          <div className="space-y-3">
+            <h4 className="font-medium text-sm flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              Template de Campanha IA
+            </h4>
+            <div className="bg-muted/30 rounded-lg p-3 space-y-3">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Título Sugerido</p>
+                <p className="font-medium text-sm">
+                  🔥 {event.title} chegou! Ofertas imperdíveis
+                  {event.channel && ` no ${channelInfo.name}`}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Copy Principal</p>
+                <p className="text-sm">
+                  Aproveite o {event.title} com descontos especiais!
+                  {event.category && ` Produtos de ${event.category} com até 50% OFF.`}
+                  Não perca essa oportunidade única!
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">CTA Recomendado</p>
+                <div className="flex items-center gap-2">
+                  <Badge variant="secondary" className="text-xs">
+                    "Comprar Agora"
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    "Ver Ofertas"
+                  </Badge>
+                  <Button variant="ghost" size="sm">
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Checklist */}
+          <div className="space-y-3">
+            <h4 className="font-medium text-sm flex items-center gap-2">
+              <CheckSquare className="h-4 w-4" />
+              Checklist de Preparação
+            </h4>
+            <div className="space-y-2">
+              {[
+                { task: 'Verificar estoque dos produtos principais', priority: 'high' },
+                { task: 'Ajustar preços e margens', priority: 'high' },
+                { task: 'Criar anúncios promocionais', priority: 'medium' },
+                { task: 'Preparar creativos (banners, fotos)', priority: 'medium' },
+                { task: 'Configurar logística e prazos', priority: 'medium' },
+                { task: 'Agendar posts nas redes sociais', priority: 'low' },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-2 text-sm">
+                  <input type="checkbox" className="rounded" />
+                  <span className={cn(
+                    item.priority === 'high' ? 'text-red-600' :
+                    item.priority === 'medium' ? 'text-yellow-600' :
+                    'text-green-600'
+                  )}>
+                    {item.task}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 

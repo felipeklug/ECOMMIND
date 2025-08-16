@@ -29,6 +29,9 @@ interface CalendarEvent {
   category: string | null;
   importance: 'low' | 'medium' | 'high';
   source: 'seed' | 'manual' | 'upload';
+  niche: string | null;
+  global: boolean;
+  ai_origin: string | null;
   metadata: Record<string, any>;
 }
 
@@ -65,6 +68,41 @@ function getChannelIcon(channel: string | null) {
       return '📦';
     case 'site':
       return '🌐';
+    default:
+      return '📅';
+  }
+}
+
+function getNicheIcon(niche: string | null, global: boolean) {
+  if (global) return '🌍';
+
+  switch (niche) {
+    case 'pet':
+      return '🐾';
+    case 'moda':
+      return '👗';
+    case 'beleza':
+      return '💄';
+    case 'saude':
+      return '🏥';
+    case 'auto':
+      return '🚗';
+    case 'casa':
+      return '🏠';
+    case 'eletronicos':
+      return '📱';
+    case 'infantil':
+      return '🧸';
+    case 'esportes':
+      return '⚽';
+    case 'games':
+      return '🎮';
+    case 'agro':
+      return '🌾';
+    case 'papelaria':
+      return '📝';
+    case 'ferramentas':
+      return '🔧';
     default:
       return '📅';
   }
@@ -164,11 +202,16 @@ export function CalendarView({
                     )}
                   >
                     <span className="mr-1">
-                      {getChannelIcon(event.channel)}
+                      {getNicheIcon(event.niche, event.global)}
                     </span>
                     <span className="truncate">
                       {event.title}
                     </span>
+                    {event.ai_origin === 'curated_ai' && (
+                      <span className="ml-auto">
+                        ✨
+                      </span>
+                    )}
                   </Button>
                 ))}
                 

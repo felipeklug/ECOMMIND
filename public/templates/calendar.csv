@@ -1,11 +1,20 @@
-date,title,channel,category,importance
-2025-05-05,Shopee 5.5,shopee,Moda,high
-2025-06-06,Shopee 6.6,shopee,Moda,high
-2025-08-08,Shopee 8.8,shopee,Moda,high
-2025-11-29,Black Friday,all,Todos,high
-2025-05-12,Dia das Mães,all,Presentes,high
-2025-08-11,Dia dos Pais,all,Presentes,high
-2025-10-12,Dia das Crianças,all,Brinquedos,high
-2025-12-25,Natal,all,Presentes,high
-2025-02-14,Dia dos Namorados,all,Presentes,medium
-2025-03-08,Dia da Mulher,all,Moda,medium
+date,title,channel,category,importance,niche,global
+2025-05-05,Shopee 5.5,shopee,Moda,high,,true
+2025-06-06,Shopee 6.6,shopee,Moda,high,,true
+2025-08-08,Shopee 8.8,shopee,Moda,high,,true
+2025-11-29,Black Friday,all,Todos,high,,true
+2025-05-12,Dia das Mães,all,Presentes,high,,true
+2025-08-11,Dia dos Pais,all,Presentes,high,,true
+2025-10-12,Dia das Crianças,all,Brinquedos,high,infantil,false
+2025-12-25,Natal,all,Presentes,high,,true
+2025-02-14,Dia dos Namorados,all,Presentes,medium,,true
+2025-03-08,Dia da Mulher,all,Moda,medium,moda,false
+2025-04-04,Dia Mundial dos Animais de Rua,,Pet,high,pet,false
+2025-10-04,Dia Mundial dos Animais,,Pet,high,pet,false
+2025-01-23,São Paulo Fashion Week,,Moda,high,moda,false
+2025-10-01,Outubro Rosa,,Saúde,high,saude,false
+2025-11-01,Novembro Azul,,Saúde,high,saude,false
+2025-10-24,Salão do Automóvel,,Auto,high,auto,false
+2025-09-09,Dia da Beleza,,Beleza,high,beleza,false
+2025-04-06,Dia Mundial da Atividade Física,,Esportes,medium,esportes,false
+2025-06-15,Dia do Gamer,,Games,high,games,false
