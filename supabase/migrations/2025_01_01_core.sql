@@ -23,6 +23,7 @@ create table if not exists companies (
   name text not null,
   slug text unique not null,
   settings jsonb default '{}'::jsonb,
+  bling_tokens jsonb, -- Encrypted Bling OAuth tokens
   created_at timestamptz not null default utc_now(),
   updated_at timestamptz not null default utc_now()
 );

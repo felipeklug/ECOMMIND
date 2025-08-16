@@ -1,97 +1,179 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+/**
+ * Bling OAuth Callback Handler
+ * Handles the OAuth callback and token exchange
+ */
 
-// Helper function to create Basic Auth header for Bling
-function createBasicAuthHeader(clientId: string, clientSecret: string): string {
-  return Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-}
+import { NextRequest, NextResponse } from 'next/server';
+import { BlingAdapter } from '@/core/adapters/erp/BlingAdapter';
+import { createClient } from '@/lib/supabase/server';
+import { logSecure, createTimer } from '@/lib/logger';
 
-// GET /api/integrations/bling/callback - Handle Bling OAuth callback
+const blingAdapter = new BlingAdapter();
+
+/**
+ * GET /api/integrations/bling/callback
+ * Handle OAuth callback from Bling
+ */
 export async function GET(request: NextRequest) {
+  const timer = createTimer('bling_oauth_callback');
+
   try {
-    console.log('Callback do Bling recebido')
+    const { searchParams } = new URL(request.url);
+    const code = searchParams.get('code');
+    const state = searchParams.get('state');
+    const error = searchParams.get('error');
+    const errorDescription = searchParams.get('error_description');
 
-    const { searchParams } = new URL(request.url)
-    const code = searchParams.get('code')
-    const state = searchParams.get('state')
-    const error = searchParams.get('error')
-
-    console.log('Parâmetros recebidos:', { code, state, error })
-
+    // Handle OAuth errors
     if (error) {
-      console.error('Bling OAuth error:', error)
-      return NextResponse.redirect(
-        new URL('/integrations/bling?error=' + encodeURIComponent(error), request.url)
-      )
+      logSecure('warn', 'Bling OAuth error', {
+        error,
+        errorDescription
+      });
+
+      const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+      redirectUrl.searchParams.set('error', error);
+      redirectUrl.searchParams.set('error_description', errorDescription || 'OAuth authorization failed');
+
+      return NextResponse.redirect(redirectUrl);
     }
 
+    // Validate required parameters
     if (!code || !state) {
-      console.error('Parâmetros obrigatórios ausentes')
-      return NextResponse.redirect(
-        new URL('/integrations/bling?error=missing_parameters', request.url)
-      )
+      logSecure('warn', 'Bling OAuth callback missing parameters', {
+        hasCode: !!code,
+        hasState: !!state
+      });
+
+      const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+      redirectUrl.searchParams.set('error', 'invalid_request');
+      redirectUrl.searchParams.set('error_description', 'Missing authorization code or state');
+
+      return NextResponse.redirect(redirectUrl);
     }
 
-    // Extract company ID from state (format: companyId-timestamp)
-    const companyId = state.split('-')[0]
-    if (!companyId) {
-      console.error('State inválido:', state)
-      return NextResponse.redirect(
-        new URL('/integrations/bling?error=invalid_state', request.url)
-      )
+    // Parse state to extract company ID
+    const stateParts = state.split(':');
+    if (stateParts.length < 3) {
+      logSecure('warn', 'Bling OAuth invalid state format', { state });
+
+      const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+      redirectUrl.searchParams.set('error', 'invalid_state');
+      redirectUrl.searchParams.set('error_description', 'Invalid state parameter');
+
+      return NextResponse.redirect(redirectUrl);
     }
 
-    // Real OAuth flow with Bling API
-    const clientId = process.env.BLING_CLIENT_ID
-    const clientSecret = process.env.BLING_CLIENT_SECRET
+    const companyId = stateParts[0];
+    const timestamp = parseInt(stateParts[1]);
 
-    if (!clientId || !clientSecret) {
-      console.error('Credenciais do Bling não configuradas')
-      return NextResponse.redirect(
-        new URL('/integrations/bling?error=credentials_not_configured', request.url)
-      )
+    // Validate state timestamp (should be within last 10 minutes)
+    const now = Date.now();
+    const maxAge = 10 * 60 * 1000; // 10 minutes
+
+    if (now - timestamp > maxAge) {
+      logSecure('warn', 'Bling OAuth state expired', {
+        companyId,
+        timestamp,
+        age: now - timestamp
+      });
+
+      const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+      redirectUrl.searchParams.set('error', 'state_expired');
+      redirectUrl.searchParams.set('error_description', 'Authorization request expired');
+
+      return NextResponse.redirect(redirectUrl);
     }
 
-    // Exchange code for tokens (must be done within 60 seconds)
-    console.log('Trocando code por tokens...')
+    logSecure('info', 'Bling OAuth callback received', {
+      companyId,
+      hasCode: !!code
+    });
 
-    const tokenResponse = await fetch('https://www.bling.com.br/Api/v3/oauth/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': '1.0',
-        'Authorization': `Basic ${createBasicAuthHeader(clientId, clientSecret)}`
-      },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code: code
+    // Exchange code for tokens
+    const encryptedTokenData = await blingAdapter.exchangeCode(code);
+
+    // Save tokens to company record
+    const supabase = createClient();
+
+    const { error: updateError } = await supabase
+      .from('companies')
+      .update({
+        bling_tokens: encryptedTokenData,
+        updated_at: new Date().toISOString(),
       })
-    })
+      .eq('id', companyId);
 
-    const tokenData = await tokenResponse.json()
+    if (updateError) {
+      logSecure('error', 'Failed to save Bling tokens', {
+        companyId,
+        error: updateError
+      });
 
-    if (!tokenResponse.ok) {
-      console.error('Erro ao obter tokens do Bling:', tokenData)
-      return NextResponse.redirect(
-        new URL('/integrations/bling?error=token_exchange_failed', request.url)
-      )
+      const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+      redirectUrl.searchParams.set('error', 'save_failed');
+      redirectUrl.searchParams.set('error_description', 'Failed to save integration tokens');
+
+      return NextResponse.redirect(redirectUrl);
     }
 
-    console.log('Tokens obtidos com sucesso')
+    timer.end({ companyId, success: true });
 
-    // Save tokens to database
-    console.log('Salvando tokens para empresa:', companyId)
-    // In production, this would save to the database
-    // For now, just log the success
+    logSecure('info', 'Bling integration completed successfully', {
+      companyId,
+      expires_at: encryptedTokenData.expires_at,
+      scope: encryptedTokenData.scope,
+    });
 
-    return NextResponse.redirect(
-      new URL('/integrations/bling?success=true', request.url)
-    )
+    // Redirect to success page
+    const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+    redirectUrl.searchParams.set('success', '1');
+    redirectUrl.searchParams.set('connected', 'true');
+
+    return NextResponse.redirect(redirectUrl);
 
   } catch (error) {
-    console.error('Bling callback error:', error)
-    return NextResponse.redirect(
-      new URL('/integrations/bling?error=callback_failed', request.url)
-    )
+    timer.end({ error: true });
+
+    logSecure('error', 'Bling OAuth callback failed', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+
+    // Redirect to error page
+    const redirectUrl = new URL('/dashboard/configuracoes/bling', request.url);
+    redirectUrl.searchParams.set('error', 'callback_failed');
+    redirectUrl.searchParams.set('error_description', 'OAuth callback processing failed');
+
+    return NextResponse.redirect(redirectUrl);
   }
+}
+
+// Handle unsupported methods
+export async function POST() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  );
+}
+
+export async function PUT() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  );
+}
+
+export async function DELETE() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  );
+}
+
+export async function PATCH() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  );
 }
