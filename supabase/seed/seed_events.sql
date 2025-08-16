@@ -153,9 +153,88 @@ on conflict (id) do nothing;
 -- ETL Checkpoints
 -- =====================================================
 
-insert into etl_checkpoints (company_id, source, last_run_at) values 
+insert into etl_checkpoints (company_id, source, last_run_at) values
 ('550e8400-e29b-41d4-a716-446655440000', 'bling.products', current_timestamp - interval '2 hours'),
 ('550e8400-e29b-41d4-a716-446655440000', 'bling.orders', current_timestamp - interval '1 hour'),
 ('550e8400-e29b-41d4-a716-446655440000', 'meli.orders', current_timestamp - interval '30 minutes'),
 ('550e8400-e29b-41d4-a716-446655440000', 'shopee.orders', current_timestamp - interval '45 minutes')
 on conflict (company_id, source) do nothing;
+
+-- =====================================================
+-- Eventos de E-commerce (Calendário Comercial Brasileiro)
+-- =====================================================
+
+-- Criar tabela de eventos se não existir
+create table if not exists commercial_events (
+  id uuid primary key default uuid_generate_v4(),
+  name text not null,
+  description text,
+  event_date date not null,
+  event_type text not null, -- 'holiday'|'commercial'|'seasonal'|'special'
+  impact_level text default 'medium', -- 'low'|'medium'|'high'|'critical'
+  categories text[], -- categorias de produtos mais impactadas
+  preparation_days int default 30, -- dias de antecedência para preparação
+  created_at timestamptz not null default utc_now()
+);
+
+-- Eventos 2025
+insert into commercial_events (name, description, event_date, event_type, impact_level, categories, preparation_days) values
+-- Janeiro
+('Liquidação de Janeiro', 'Liquidação pós-natal e ano novo', '2025-01-02', 'commercial', 'high', '{"fashion","home","electronics"}', 21),
+('Volta às Aulas', 'Período de volta às aulas', '2025-01-15', 'seasonal', 'high', '{"education","electronics","fashion"}', 30),
+
+-- Fevereiro
+('Carnaval', 'Feriado de Carnaval', '2025-03-03', 'holiday', 'medium', '{"fashion","party","travel"}', 45),
+('Dia dos Namorados (Preparação)', 'Preparação para Dia dos Namorados', '2025-02-01', 'commercial', 'high', '{"gifts","jewelry","fashion","beauty"}', 14),
+
+-- Março
+('Dia da Mulher', 'Dia Internacional da Mulher', '2025-03-08', 'commercial', 'high', '{"beauty","fashion","jewelry","flowers"}', 21),
+('Outono (Início)', 'Início do outono - mudança de estação', '2025-03-20', 'seasonal', 'medium', '{"fashion","home"}', 30),
+
+-- Abril
+('Páscoa', 'Feriado de Páscoa', '2025-04-20', 'holiday', 'high', '{"food","gifts","toys"}', 30),
+('Dia do Livro', 'Dia Mundial do Livro', '2025-04-23', 'commercial', 'medium', '{"books","education"}', 14),
+
+-- Maio
+('Dia das Mães', 'Dia das Mães', '2025-05-11', 'commercial', 'critical', '{"gifts","beauty","jewelry","home","flowers"}', 45),
+('Festa Junina (Preparação)', 'Preparação para festas juninas', '2025-05-01', 'seasonal', 'medium', '{"party","food","fashion"}', 30),
+
+-- Junho
+('Dia dos Namorados', 'Dia dos Namorados', '2025-06-12', 'commercial', 'critical', '{"gifts","jewelry","fashion","beauty","restaurants"}', 30),
+('Festa Junina', 'Festas Juninas', '2025-06-24', 'seasonal', 'high', '{"party","food","fashion"}', 21),
+('Inverno (Início)', 'Início do inverno', '2025-06-21', 'seasonal', 'high', '{"fashion","home","heating"}', 45),
+('Meio do Ano', 'Promoções de meio de ano', '2025-06-15', 'commercial', 'high', '{"electronics","home","fashion"}', 30),
+
+-- Julho
+('Férias Escolares', 'Férias de julho', '2025-07-01', 'seasonal', 'high', '{"travel","toys","entertainment","sports"}', 30),
+('Dia dos Avós', 'Dia dos Avós', '2025-07-26', 'commercial', 'medium', '{"gifts","health","books"}', 21),
+
+-- Agosto
+('Dia dos Pais', 'Dia dos Pais', '2025-08-10', 'commercial', 'critical', '{"gifts","electronics","sports","tools","fashion"}', 45),
+('Dia do Estudante', 'Dia do Estudante', '2025-08-11', 'commercial', 'medium', '{"education","electronics","books"}', 14),
+
+-- Setembro
+('Independência do Brasil', 'Feriado da Independência', '2025-09-07', 'holiday', 'low', '{"patriotic"}', 14),
+('Primavera (Início)', 'Início da primavera', '2025-09-22', 'seasonal', 'medium', '{"fashion","beauty","home","garden"}', 30),
+
+-- Outubro
+('Dia das Crianças', 'Dia das Crianças', '2025-10-12', 'commercial', 'critical', '{"toys","games","electronics","education","fashion"}', 45),
+('Halloween', 'Halloween (crescente no Brasil)', '2025-10-31', 'commercial', 'medium', '{"party","costumes","decoration"}', 30),
+
+-- Novembro
+('Black Friday', 'Black Friday', '2025-11-28', 'commercial', 'critical', '{"electronics","fashion","home","beauty","sports"}', 60),
+('Cyber Monday', 'Cyber Monday', '2025-12-01', 'commercial', 'critical', '{"electronics","software","digital"}', 60),
+('Preparação Natal', 'Início das vendas de Natal', '2025-11-01', 'commercial', 'high', '{"gifts","decoration","food","toys"}', 30),
+
+-- Dezembro
+('Verão (Início)', 'Início do verão', '2025-12-21', 'seasonal', 'high', '{"fashion","sports","travel","beach"}', 45),
+('Natal', 'Natal', '2025-12-25', 'holiday', 'critical', '{"gifts","food","decoration","toys","electronics"}', 60),
+('Ano Novo', 'Réveillon', '2025-12-31', 'holiday', 'high', '{"party","fashion","travel","beauty"}', 30),
+
+-- Eventos especiais de e-commerce
+('Amazon Prime Day Brasil', 'Prime Day da Amazon no Brasil', '2025-07-15', 'commercial', 'high', '{"electronics","home","books"}', 21),
+('Aniversário Mercado Livre', 'Aniversário do Mercado Livre', '2025-08-02', 'commercial', 'high', '{"electronics","home","fashion"}', 30),
+('Semana do Brasil (Preparação)', 'Preparação Semana do Brasil', '2025-08-15', 'commercial', 'high', '{"all"}', 21),
+('Semana do Brasil', 'Semana do Brasil', '2025-09-01', 'commercial', 'critical', '{"all"}', 45)
+
+on conflict (id) do nothing;
