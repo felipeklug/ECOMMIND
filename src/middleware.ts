@@ -1,11 +1,18 @@
 /**
  * ECOMMIND Security Middleware
  * Handles authentication, feature flags, and security headers
+ * RuleAgent Gate: Validação dos 3 prompts fundamentais
  */
 
+import { assertAllRules } from '@/core/agents/RuleAgent';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { getModuleFromPath, isModuleEnabled } from '@/lib/flags';
+
+// RuleAgent Gate - Validação automática
+if (process.env.NODE_ENV !== 'test') {
+  assertAllRules({ pr: 'PR#20.1', modules: ['auth', 'middleware'] }).catch(console.error);
+}
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl;
@@ -64,7 +71,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from login
   if (path === '/login' && user) {
-    const dashboardUrl = new URL('/dashboard', request.url);
+    const dashboardUrl = new URL('/app', request.url);
     return NextResponse.redirect(dashboardUrl);
   }
 
@@ -130,11 +137,22 @@ function setSecurityHeaders(response: NextResponse): void {
 function isPublicRoute(path: string): boolean {
   const publicRoutes = [
     '/',
+    '/recursos',
+    '/modulos',
+    '/precos',
+    '/seguranca',
+    '/sobre',
+    '/contato',
+    '/termos',
+    '/privacidade',
+    '/dpa',
     '/login',
-    '/register',
+    '/logout',
+    '/convite',
     '/auth/callback',
     '/api/health',
     '/api/auth/',
+    '/api/lead',
     '/emergency',
     '/_next/',
     '/favicon.ico',
@@ -150,6 +168,7 @@ function isPublicRoute(path: string): boolean {
  */
 function isProtectedRoute(path: string): boolean {
   const protectedPrefixes = [
+    '/app',
     '/dashboard',
     '/api/secure',
     '/onboarding',
