@@ -366,31 +366,32 @@ export default function BlingConfigPage() {
       </Card>
 
       {!connected && (
-        <div className="text-center">
-          <Button
-            onClick={connectBling}
-            disabled={loading}
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-          >
-            {loading ? (
-              <>
-                <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                Conectando...
-              </>
-            ) : (
-              <>
-                <ExternalLink className="mr-2 h-5 w-5" />
-                Conectar com Bling Agora
-              </>
-            )}
-          </Button>
-          <p className="text-xs text-gray-500 mt-2">
-            Você será redirecionado para o site do Bling para autorizar a conexão
-          </p>
-        </div>
-        </CardContent>
-      </Card>
+        <Card className="mt-6">
+          <CardContent className="p-6 text-center">
+            <Button
+              onClick={connectBling}
+              disabled={loading}
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
+              {loading ? (
+                <>
+                  <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
+                  Conectando...
+                </>
+              ) : (
+                <>
+                  <ExternalLink className="mr-2 h-5 w-5" />
+                  Conectar com Bling Agora
+                </>
+              )}
+            </Button>
+            <p className="text-xs text-gray-500 mt-2">
+              Você será redirecionado para o site do Bling para autorizar a conexão
+            </p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
