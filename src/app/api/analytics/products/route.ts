@@ -300,7 +300,7 @@ function calculateStockAlerts(products: any[], productMetrics: any[]) {
   })
 
   return alerts.sort((a, b) => {
-    const priorityOrder = { high: 3, medium: 2, low: 1 }
-    return priorityOrder[b.priority] - priorityOrder[a.priority]
+    const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 }
+    return (priorityOrder[b.priority] || 1) - (priorityOrder[a.priority] || 1)
   })
 }

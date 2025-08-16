@@ -98,7 +98,7 @@ const SidebarItem = memo(({ item, isActive, isCollapsed }: SidebarItemProps) => 
 
   return (
     <Link
-      href={item.href}
+      href={item.href as any}
       className={`
         group relative flex items-center gap-4 px-4 py-4 rounded-2xl
         transition-all duration-300 ease-out

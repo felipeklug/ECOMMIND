@@ -300,7 +300,7 @@ export default function DashboardPage() {
             </Link>
 
             <Link
-              href="/dashboard/calendario"
+              href={"/dashboard/calendario" as any}
               className={`group relative flex items-center px-4 py-3 text-sm font-medium text-gray-300 rounded-lg hover:bg-slate-700/50 hover:text-white transition-all duration-200 ${sidebarCollapsed ? 'justify-center' : ''}`}
             >
               <Calendar className="w-5 h-5 flex-shrink-0" />

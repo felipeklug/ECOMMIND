@@ -197,7 +197,7 @@ export async function GET() {
       connected: isConnected,
       lastSync: lastSync?.toISOString(),
       daysSinceLastSync,
-      needsSync: !lastSync || daysSinceLastSync > 1,
+      needsSync: !lastSync || (daysSinceLastSync !== null && daysSinceLastSync > 1),
       data: {
         products: productsCount || 0,
         orders: ordersCount || 0,
