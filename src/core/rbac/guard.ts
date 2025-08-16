@@ -58,7 +58,7 @@ export function AccessGuard({
   action,
   userRole,
   fallback = null,
-}: AccessGuardProps) {
+}: AccessGuardProps): React.ReactNode {
   let hasAccess = false;
 
   if (route) {
@@ -69,7 +69,7 @@ export function AccessGuard({
     hasAccess = roles.includes(userRole);
   }
 
-  return hasAccess ? <>{children}</> : <>{fallback}</>;
+  return hasAccess ? children : fallback;
 }
 
 /**
