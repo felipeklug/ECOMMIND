@@ -5,10 +5,22 @@
 
 import { logger } from '@/lib/logger';
 import { encryptToken, decryptToken } from '@/lib/crypto';
-import type {
+import {
+  BlingOAuthConfig,
+  BlingTokenResponse,
   BlingProduct,
   BlingOrder,
-  BlingTokenResponse,
+  BlingFinanceAP,
+  BlingFinanceAR,
+  BlingWebhookEvent,
+  BlingProductListResponseSchema,
+  BlingOrderListResponseSchema,
+  BlingFinanceAPListResponseSchema,
+  BlingFinanceARListResponseSchema,
+  BlingTokenResponseSchema,
+  BlingApiErrorSchema
+} from '@/core/validation/bling.schemas';
+import type {
   EncryptedTokenData,
   MappedProduct,
   MappedOrder,
