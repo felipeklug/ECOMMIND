@@ -1,0 +1,11 @@
+period_start,period_end,scope,channel,category,record_type,identifier,title,price,price_median,demand_index,growth_rate,sellers_top,units_sold_est,revenue_est,attributes
+2025-07-01,2025-07-31,niche,meli,Moda > Camisetas,listing,MLB123456,Camiseta Modal Preta,129,119,78,0.22,5,1800,232200,"{""variations"":[""P"",""M"",""G""]}"
+2025-07-01,2025-07-31,category,meli,Moda > Meias,keyword,meia cano alto,,29,27,65,0.18,8,950,27550,"{}"
+2025-07-01,2025-07-31,niche,shopee,Eletrônicos > Fones,listing,SHP789012,Fone Bluetooth Premium,89,79,85,0.35,12,2400,211200,"{""colors"":[""preto"",""branco"",""azul""]}"
+2025-07-01,2025-07-31,category,amazon,Casa > Decoração,keyword,luminária led,,45,42,72,0.28,6,1200,54000,"{}"
+2025-07-01,2025-07-31,niche,site,Beleza > Skincare,listing,SKU345678,Sérum Vitamina C,159,149,68,0.15,3,800,127200,"{""sizes"":[""30ml"",""60ml""]}"
+2025-07-01,2025-07-31,category,meli,Esporte > Fitness,keyword,kit treino casa,,199,189,91,0.42,15,3200,636800,"{""bundle"":true}"
+2025-07-01,2025-07-31,niche,shopee,Moda > Tênis,listing,SHP456789,Tênis Casual Unissex,149,139,76,0.19,8,1600,238400,"{""sizes"":[""36"",""37"",""38"",""39"",""40"",""41"",""42""]}"
+2025-07-01,2025-07-31,category,meli,Tech > Acessórios,keyword,carregador wireless,,69,65,83,0.31,10,2800,193200,"{}"
+2025-07-01,2025-07-31,niche,amazon,Livros > Autoajuda,listing,AMZ987654,Livro Mindset Vencedor,39,35,59,0.12,4,600,23400,"{""format"":[""físico"",""digital""]}"
+2025-07-01,2025-07-31,category,site,Pet > Ração,keyword,ração premium cães,,89,85,88,0.25,7,2100,186900,"{""sizes"":[""1kg"",""3kg"",""10kg"",""15kg""]}"
