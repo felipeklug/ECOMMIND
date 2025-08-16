@@ -1,0 +1,312 @@
+{
+  "version": "1.0.0",
+  "description": "ECOMMIND Event Bus Contract - Module Integration Events",
+  "channels": [
+    "chat",
+    "missions",
+    "market",
+    "planning",
+    "reports",
+    "system"
+  ],
+  "events": [
+    {
+      "name": "chat.thread.created",
+      "channel": "chat",
+      "required": true,
+      "description": "New chat thread created",
+      "payload": {
+        "threadId": "string",
+        "companyId": "string",
+        "customerId": "string",
+        "channel": "string",
+        "priority": "string",
+        "metadata": "object"
+      },
+      "triggers": [
+        "missions.create_support_mission",
+        "reports.update_chat_metrics"
+      ]
+    },
+    {
+      "name": "chat.message.received",
+      "channel": "chat",
+      "required": true,
+      "description": "New message received in chat",
+      "payload": {
+        "threadId": "string",
+        "messageId": "string",
+        "content": "string",
+        "sender": "string",
+        "timestamp": "string",
+        "attachments": "array"
+      },
+      "triggers": [
+        "chat.ai_response_suggested",
+        "missions.update_response_time"
+      ]
+    },
+    {
+      "name": "chat.ai_response.suggested",
+      "channel": "chat",
+      "required": true,
+      "description": "AI suggested response for chat",
+      "payload": {
+        "threadId": "string",
+        "suggestion": "string",
+        "confidence": "number",
+        "context": "object",
+        "alternatives": "array"
+      },
+      "triggers": [
+        "chat.agent_review_required"
+      ]
+    },
+    {
+      "name": "missions.created",
+      "channel": "missions",
+      "required": true,
+      "description": "New mission created",
+      "payload": {
+        "missionId": "string",
+        "companyId": "string",
+        "module": "string",
+        "title": "string",
+        "priority": "string",
+        "assigneeId": "string",
+        "dueAt": "string",
+        "tags": "array"
+      },
+      "triggers": [
+        "reports.update_mission_metrics",
+        "system.notification_send"
+      ]
+    },
+    {
+      "name": "missions.status_changed",
+      "channel": "missions",
+      "required": true,
+      "description": "Mission status updated",
+      "payload": {
+        "missionId": "string",
+        "oldStatus": "string",
+        "newStatus": "string",
+        "updatedBy": "string",
+        "timestamp": "string",
+        "notes": "string"
+      },
+      "triggers": [
+        "reports.update_productivity_metrics",
+        "missions.auto_assign_next"
+      ]
+    },
+    {
+      "name": "market.event.detected",
+      "channel": "market",
+      "required": true,
+      "description": "Market event detected or created",
+      "payload": {
+        "eventId": "string",
+        "companyId": "string",
+        "title": "string",
+        "date": "string",
+        "channel": "string",
+        "importance": "string",
+        "niche": "string",
+        "aiOrigin": "string"
+      },
+      "triggers": [
+        "missions.create_campaign_mission",
+        "planning.update_calendar"
+      ]
+    },
+    {
+      "name": "market.niche.resolved",
+      "channel": "market",
+      "required": true,
+      "description": "Company niche resolved by AI",
+      "payload": {
+        "companyId": "string",
+        "niches": "array",
+        "confidence": "number",
+        "sources": "array",
+        "timestamp": "string"
+      },
+      "triggers": [
+        "market.curate_events",
+        "reports.update_niche_metrics"
+      ]
+    },
+    {
+      "name": "planning.campaign.created",
+      "channel": "planning",
+      "required": true,
+      "description": "Campaign planning created",
+      "payload": {
+        "campaignId": "string",
+        "companyId": "string",
+        "eventId": "string",
+        "title": "string",
+        "channel": "string",
+        "budget": "number",
+        "startDate": "string",
+        "endDate": "string"
+      },
+      "triggers": [
+        "missions.create_campaign_tasks",
+        "reports.update_campaign_metrics"
+      ]
+    },
+    {
+      "name": "reports.insight.generated",
+      "channel": "reports",
+      "required": true,
+      "description": "AI insight generated from report",
+      "payload": {
+        "insightId": "string",
+        "companyId": "string",
+        "reportType": "string",
+        "type": "string",
+        "title": "string",
+        "description": "string",
+        "recommendation": "string",
+        "priority": "string",
+        "actionable": "boolean"
+      },
+      "triggers": [
+        "missions.create_insight_mission",
+        "system.notification_send"
+      ]
+    },
+    {
+      "name": "system.notification.send",
+      "channel": "system",
+      "required": true,
+      "description": "System notification to be sent",
+      "payload": {
+        "userId": "string",
+        "companyId": "string",
+        "type": "string",
+        "title": "string",
+        "message": "string",
+        "channel": "string",
+        "priority": "string",
+        "metadata": "object"
+      },
+      "triggers": [
+        "system.notification_delivered"
+      ]
+    }
+  ],
+  "middleware": [
+    {
+      "name": "authentication",
+      "description": "Verify user/company authentication",
+      "required": true,
+      "order": 1
+    },
+    {
+      "name": "authorization",
+      "description": "Check permissions for event",
+      "required": true,
+      "order": 2
+    },
+    {
+      "name": "validation",
+      "description": "Validate event payload schema",
+      "required": true,
+      "order": 3
+    },
+    {
+      "name": "logging",
+      "description": "Log event for audit trail",
+      "required": true,
+      "order": 4
+    },
+    {
+      "name": "rate_limiting",
+      "description": "Prevent event spam",
+      "required": true,
+      "order": 5
+    }
+  ],
+  "integrationPatterns": {
+    "emit": {
+      "description": "Emit event to event bus",
+      "example": "eventBus.emit('chat.thread.created', payload)",
+      "rules": [
+        "Must include all required payload fields",
+        "Must handle emit failures gracefully",
+        "Must not block main execution"
+      ]
+    },
+    "listen": {
+      "description": "Listen for events from other modules",
+      "example": "eventBus.on('missions.created', handler)",
+      "rules": [
+        "Must handle events asynchronously",
+        "Must validate payload before processing",
+        "Must implement error handling"
+      ]
+    },
+    "subscribe": {
+      "description": "Subscribe to event patterns",
+      "example": "eventBus.subscribe('chat.*', handler)",
+      "rules": [
+        "Must use wildcard patterns appropriately",
+        "Must unsubscribe on component unmount",
+        "Must handle subscription errors"
+      ]
+    }
+  },
+  "errorHandling": {
+    "retryPolicy": {
+      "maxRetries": 3,
+      "backoffMs": [1000, 3000, 9000],
+      "retryableErrors": ["NETWORK_ERROR", "TIMEOUT", "SERVICE_UNAVAILABLE"]
+    },
+    "deadLetterQueue": {
+      "enabled": true,
+      "maxAge": "24h",
+      "reprocessInterval": "1h"
+    },
+    "monitoring": {
+      "metrics": ["event_count", "processing_time", "error_rate"],
+      "alerts": ["high_error_rate", "processing_delay", "dead_letter_overflow"]
+    }
+  },
+  "security": {
+    "encryption": {
+      "payloadEncryption": false,
+      "sensitiveFields": ["email", "phone", "address", "payment_info"],
+      "encryptionAlgorithm": "AES-256-GCM"
+    },
+    "authentication": {
+      "required": true,
+      "methods": ["JWT", "API_KEY"],
+      "tokenValidation": true
+    },
+    "authorization": {
+      "rbac": true,
+      "permissions": ["read", "write", "admin"],
+      "companyIsolation": true
+    }
+  },
+  "performance": {
+    "batching": {
+      "enabled": true,
+      "maxBatchSize": 100,
+      "flushIntervalMs": 1000
+    },
+    "compression": {
+      "enabled": true,
+      "algorithm": "gzip",
+      "minPayloadSize": 1024
+    },
+    "caching": {
+      "eventCache": false,
+      "subscriptionCache": true,
+      "cacheTtlMs": 300000
+    }
+  }
+}

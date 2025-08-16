@@ -1,0 +1,294 @@
+{
+  "version": "1.0.0",
+  "description": "ECOMMIND UI Kit Components - Shadcn/ui + Custom",
+  "baseComponents": [
+    {
+      "name": "Button",
+      "path": "@/components/ui/button",
+      "required": true,
+      "props": ["variant", "size", "disabled", "onClick"],
+      "variants": ["default", "destructive", "outline", "secondary", "ghost", "link"],
+      "sizes": ["default", "sm", "lg", "icon"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "rules": [
+        "Must use forwardRef",
+        "Must support all variants",
+        "Must have proper TypeScript types"
+      ]
+    },
+    {
+      "name": "Card",
+      "path": "@/components/ui/card",
+      "required": true,
+      "props": ["className"],
+      "subComponents": ["CardHeader", "CardTitle", "CardDescription", "CardContent", "CardFooter"],
+      "dependencies": [],
+      "rules": [
+        "Must use semantic structure",
+        "CardTitle should be h3 by default",
+        "CardDescription should be muted"
+      ]
+    },
+    {
+      "name": "Input",
+      "path": "@/components/ui/input",
+      "required": true,
+      "props": ["type", "placeholder", "disabled", "value", "onChange"],
+      "types": ["text", "email", "password", "number", "tel", "url"],
+      "dependencies": [],
+      "rules": [
+        "Must support all HTML input types",
+        "Must have proper focus states",
+        "Must support disabled state"
+      ]
+    },
+    {
+      "name": "Select",
+      "path": "@/components/ui/select",
+      "required": true,
+      "props": ["value", "onValueChange", "disabled"],
+      "subComponents": ["SelectTrigger", "SelectContent", "SelectItem", "SelectValue"],
+      "dependencies": ["@radix-ui/react-select"],
+      "rules": [
+        "Must use Radix UI primitives",
+        "Must support keyboard navigation",
+        "Must have proper ARIA attributes"
+      ]
+    },
+    {
+      "name": "Dialog",
+      "path": "@/components/ui/dialog",
+      "required": true,
+      "props": ["open", "onOpenChange"],
+      "subComponents": ["DialogTrigger", "DialogContent", "DialogHeader", "DialogTitle", "DialogDescription", "DialogFooter"],
+      "dependencies": ["@radix-ui/react-dialog"],
+      "rules": [
+        "Must use Radix UI primitives",
+        "Must have DialogTitle for accessibility",
+        "Must support escape key to close"
+      ]
+    },
+    {
+      "name": "Sheet",
+      "path": "@/components/ui/sheet",
+      "required": true,
+      "props": ["open", "onOpenChange", "side"],
+      "sides": ["top", "right", "bottom", "left"],
+      "subComponents": ["SheetTrigger", "SheetContent", "SheetHeader", "SheetTitle", "SheetDescription"],
+      "dependencies": ["@radix-ui/react-dialog"],
+      "rules": [
+        "Must support all sides",
+        "Must have proper animations",
+        "Must handle mobile responsiveness"
+      ]
+    },
+    {
+      "name": "Badge",
+      "path": "@/components/ui/badge",
+      "required": true,
+      "props": ["variant"],
+      "variants": ["default", "secondary", "destructive", "outline"],
+      "dependencies": ["class-variance-authority"],
+      "rules": [
+        "Must be inline element",
+        "Must support all variants",
+        "Must have proper contrast"
+      ]
+    },
+    {
+      "name": "Table",
+      "path": "@/components/ui/table",
+      "required": true,
+      "props": ["className"],
+      "subComponents": ["TableHeader", "TableBody", "TableFooter", "TableHead", "TableRow", "TableCell", "TableCaption"],
+      "dependencies": [],
+      "rules": [
+        "Must use semantic table elements",
+        "Must support responsive design",
+        "Must have proper ARIA labels"
+      ]
+    },
+    {
+      "name": "Tabs",
+      "path": "@/components/ui/tabs",
+      "required": true,
+      "props": ["value", "onValueChange", "orientation"],
+      "subComponents": ["TabsList", "TabsTrigger", "TabsContent"],
+      "dependencies": ["@radix-ui/react-tabs"],
+      "rules": [
+        "Must use Radix UI primitives",
+        "Must support keyboard navigation",
+        "Must support both orientations"
+      ]
+    },
+    {
+      "name": "Form",
+      "path": "@/components/ui/form",
+      "required": true,
+      "props": ["form"],
+      "subComponents": ["FormField", "FormItem", "FormLabel", "FormControl", "FormDescription", "FormMessage"],
+      "dependencies": ["react-hook-form", "@hookform/resolvers"],
+      "rules": [
+        "Must integrate with react-hook-form",
+        "Must support Zod validation",
+        "Must have proper error handling"
+      ]
+    }
+  ],
+  "customComponents": [
+    {
+      "name": "LoadingSpinner",
+      "path": "@/components/shared/loading-spinner",
+      "required": true,
+      "props": ["size", "className"],
+      "dependencies": ["lucide-react"],
+      "rules": [
+        "Must use Loader2 icon",
+        "Must have spin animation",
+        "Must support different sizes"
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "path": "@/components/shared/empty-state",
+      "required": true,
+      "props": ["icon", "title", "description", "action"],
+      "dependencies": ["lucide-react"],
+      "rules": [
+        "Must have consistent layout",
+        "Must support action button",
+        "Must be accessible"
+      ]
+    },
+    {
+      "name": "ErrorBoundary",
+      "path": "@/components/shared/error-boundary",
+      "required": true,
+      "props": ["fallback", "onError"],
+      "dependencies": ["react"],
+      "rules": [
+        "Must catch JavaScript errors",
+        "Must provide fallback UI",
+        "Must log errors properly"
+      ]
+    }
+  ],
+  "motionComponents": [
+    {
+      "name": "motion.div",
+      "library": "framer-motion",
+      "required": true,
+      "props": ["initial", "animate", "exit", "transition"],
+      "rules": [
+        "Must use for page transitions",
+        "Must respect prefers-reduced-motion",
+        "Must have smooth animations"
+      ]
+    },
+    {
+      "name": "AnimatePresence",
+      "library": "framer-motion",
+      "required": true,
+      "props": ["mode", "initial"],
+      "rules": [
+        "Must wrap conditional renders",
+        "Must handle exit animations",
+        "Must support multiple children"
+      ]
+    }
+  ],
+  "iconRules": {
+    "library": "lucide-react",
+    "defaultSize": "h-4 w-4",
+    "contextualSizing": {
+      "button": "h-4 w-4",
+      "card": "h-5 w-5",
+      "header": "h-6 w-6",
+      "hero": "h-8 w-8"
+    },
+    "consistency": [
+      "Use same icon for same action across app",
+      "Use contextual icons (Save → Check, Delete → Trash)",
+      "Use outline style by default"
+    ]
+  },
+  "layoutComponents": [
+    {
+      "name": "Sidebar",
+      "path": "@/components/layout/sidebar",
+      "required": true,
+      "props": ["collapsed", "onToggle"],
+      "rules": [
+        "Must be consistent across pages",
+        "Must support collapse/expand",
+        "Must handle mobile responsiveness"
+      ]
+    },
+    {
+      "name": "Header",
+      "path": "@/components/layout/header",
+      "required": true,
+      "props": ["title", "actions"],
+      "rules": [
+        "Must be consistent across pages",
+        "Must support breadcrumbs",
+        "Must have user menu"
+      ]
+    },
+    {
+      "name": "Navigation",
+      "path": "@/components/layout/navigation",
+      "required": true,
+      "props": ["items", "activeItem"],
+      "rules": [
+        "Must highlight active item",
+        "Must support nested navigation",
+        "Must be keyboard accessible"
+      ]
+    }
+  ],
+  "statePatterns": {
+    "loading": {
+      "components": ["LoadingSpinner", "Skeleton"],
+      "rules": [
+        "Must show loading state for async operations",
+        "Must use skeleton for content loading",
+        "Must have timeout handling"
+      ]
+    },
+    "empty": {
+      "components": ["EmptyState"],
+      "rules": [
+        "Must show when no data available",
+        "Must provide helpful message",
+        "Must suggest next action"
+      ]
+    },
+    "error": {
+      "components": ["ErrorBoundary", "ErrorMessage"],
+      "rules": [
+        "Must catch and display errors gracefully",
+        "Must provide retry mechanism",
+        "Must log errors for debugging"
+      ]
+    }
+  },
+  "accessibilityRules": {
+    "required": [
+      "All interactive elements must be keyboard accessible",
+      "All images must have alt text",
+      "All forms must have proper labels",
+      "Color contrast must meet WCAG AA standards",
+      "Focus indicators must be visible",
+      "Screen reader support must be implemented"
+    ],
+    "ariaAttributes": [
+      "aria-label",
+      "aria-labelledby",
+      "aria-describedby",
+      "aria-expanded",
+      "aria-hidden",
+      "role"
+    ]
+  }
+}
