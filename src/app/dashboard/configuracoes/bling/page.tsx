@@ -387,9 +387,8 @@ export default function BlingConfigPage() {
           </Button>
           <p className="text-xs text-gray-500 mt-2">
             Você será redirecionado para o site do Bling para autorizar a conexão
-              </p>
-            </div>
-          </div>
+          </p>
+        </div>
         </CardContent>
       </Card>
     </div>
