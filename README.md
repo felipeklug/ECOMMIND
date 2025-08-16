@@ -2,6 +2,8 @@
 
 A única plataforma que transforma seu WhatsApp no centro de comando do seu e-commerce, unindo BI em tempo real, gestão de equipe e alertas inteligentes numa experiência conversacional.
 
+🚀 **Deploy Status**: Ready for production deployment on Vercel
+
 ## 🚀 Funcionalidades Principais
 
 ### 📊 BI Analítico e Operacional
