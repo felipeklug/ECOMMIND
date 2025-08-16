@@ -91,40 +91,9 @@ export function formatRelativeTime(date: string | Date): string {
   return formatDate(dateObj);
 }
 
-/**
- * Format currency values
- */
-export function formatCurrency(value: number, abbreviated: boolean = false): string {
-  if (abbreviated && value >= 1000) {
-    if (value >= 1000000) {
-      return `R$ ${(value / 1000000).toFixed(1)}M`;
-    }
-    if (value >= 1000) {
-      return `R$ ${(value / 1000).toFixed(1)}K`;
-    }
-  }
 
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(value);
-}
 
-/**
- * Format number values
- */
-export function formatNumber(value: number, abbreviated: boolean = false): string {
-  if (abbreviated && value >= 1000) {
-    if (value >= 1000000) {
-      return `${(value / 1000000).toFixed(1)}M`;
-    }
-    if (value >= 1000) {
-      return `${(value / 1000).toFixed(1)}K`;
-    }
-  }
 
-  return new Intl.NumberFormat('pt-BR').format(value);
-}
 
 /**
  * Format percentage values
